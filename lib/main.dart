@@ -16,12 +16,13 @@ class ExpenseApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Despesas Pessoais')),
+        title: Center(
+          child: Text('Despesas Pessoais'),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,7 +34,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.purple,
             ),
           ),
-        TransactionUser(),
+          TransactionUser(),
         ],
       ),
     );
