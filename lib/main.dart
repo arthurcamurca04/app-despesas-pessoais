@@ -4,38 +4,35 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:despesas_pessoais/components/transaction_list.dart';
 import 'package:despesas_pessoais/models/transaction.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(ExpenseApp());
 
 class ExpenseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       title: 'ExpensesApp',
       theme: ThemeData(
-        textTheme: ThemeData.light().textTheme.copyWith(
-          title: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold
-          ),
-          button: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          )
-        ),
+          textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold),
+              button: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              )),
           primarySwatch: Colors.green,
           fontFamily: "Quicksand",
           appBarTheme: AppBarTheme(
               textTheme: TextTheme(
             title: TextStyle(
-              fontFamily: "OpenSans",
-              fontWeight: FontWeight.bold,
-              fontSize: 20
-            ),
-
+                fontFamily: "OpenSans",
+                fontWeight: FontWeight.bold,
+                fontSize: 20),
           ))),
       home: MyHomePage(),
     );
@@ -48,11 +45,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [];
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Internet',
+      value: 60,
+      date: DateTime.now(),
+    ),
+  ];
 
-  List<Transaction> get _recentTransaction{
-    return _transactions.where((tr){
-      return tr.date.isAfter(DateTime.now().subtract(Duration(days: 7)),);
+  List<Transaction> get _recentTransaction {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(
+        DateTime.now().subtract(Duration(days: 7)),
+      );
     }).toList();
   }
 
@@ -71,9 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
-  _removeTransaction(String id){
+  _removeTransaction(String id) {
     setState(() {
-      _transactions.removeWhere((tr){
+      _transactions.removeWhere((tr) {
         return tr.id == id;
       });
     });
@@ -90,22 +126,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _openTransactionFormModal(context),
+        )
+      ],
+    );
+    final availableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height
+    - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _openTransactionFormModal(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransaction),
-            TransactionList(_transactions, _removeTransaction),
+            Container(
+              height: availableHeight * 0.3,
+              child: Chart(_recentTransaction),
+            ),
+            Container(
+              height: availableHeight * 0.7,
+              child: TransactionList(_transactions, _removeTransaction),
+            ),
           ],
         ),
       ),
