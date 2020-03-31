@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ChartBar extends StatelessWidget {
   final String label;
@@ -20,7 +21,12 @@ class ChartBar extends StatelessWidget {
             Container(
               height: constraints.maxHeight * 0.15,
               child: FittedBox(
-                child: Text("${value.toStringAsFixed(2)}"),
+                child: Text(NumberFormat.currency(
+                  locale: 'pt-BR',
+                  symbol: 'R\$',
+                  decimalDigits: 2,
+                  name: 'BRL',
+                ).format(value)),
               ),
             ),
             SizedBox(
@@ -36,7 +42,7 @@ class ChartBar extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1.0),
                       color: Color.fromRGBO(220, 220, 220, 1),
-                      borderRadius: BorderRadius.circular(5),
+                      //borderRadius: BorderRadius.circular(5),
                     ),
                   ),
                   FractionallySizedBox(
@@ -44,7 +50,7 @@ class ChartBar extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(5),
+                        // borderRadius: BorderRadius.circular(5),
                       ),
                     ),
                   )
