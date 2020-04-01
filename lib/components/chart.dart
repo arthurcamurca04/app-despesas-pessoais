@@ -21,9 +21,9 @@ class Chart extends StatelessWidget {
           totalSum += recentTransaction[i].value;
         }
       }
-
+      
       return {
-        'day': DateFormat.E().format(weekDay)[0],
+        'day': DateFormat('E').format(weekDay),
         "value": totalSum,
       };
     }).reversed.toList();
